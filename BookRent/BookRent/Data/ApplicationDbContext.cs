@@ -24,16 +24,12 @@ namespace BookRent.Data
 
             base.OnModelCreating(builder);
         }
-
-        public DbSet<Library> Libraries { get; set; }
-
-        public DbSet<Books> Bookss { get; set; }
-
-        public DbSet<Author> Authors { get; set; }
-
-        public DbSet<Publisher> Publishers { get; set; }
-
         public DbSet<Library_Books> Library_Bookss { get; set; }
+        public DbSet<Books> Bookss { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Library> Libraries{ get; set; }
+        public DbSet<BookRentals> BookRentals { get; set; }
 
 
     }

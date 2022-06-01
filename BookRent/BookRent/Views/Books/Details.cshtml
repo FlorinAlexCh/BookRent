@@ -1,0 +1,50 @@
+﻿@model BookRent.Models.Books
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.BkName
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="@Model.BkImage" width="100%" alt="@Model.BkName">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">@Model.BkDescription</p>
+                        <p class="card-text">
+                            <b>Cinema: </b>
+                            <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.AuthorID">
+                                @Model.Author.Name
+                            </a>
+                        </p>
+                        <p class="card-text">
+                            <b>Producer: </b>
+                            <a asp-controller="Publishers" asp-action="Details" asp-route-id="@Model.PublisherID">
+                                @Model.Publisher.Name
+                            </a>
+                        </p>
+                        <p class="card-text"><b>Category: </b>@Model.BkCategory</p>
+                        <p class="card-text"><b>Release year: </b>@Model.BkReleaseYear</p>
+                        <p class="card-text">
+                            <b>Disponibil in: </b>
+                            <hr />
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

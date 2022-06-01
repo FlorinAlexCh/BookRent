@@ -23,6 +23,7 @@ namespace BookRent.Models
         public BkCategory BkCategory { get; set; }
 
         public int BkReleaseYear { get; set; }
+        public int Quantity { get; set; }
 
         public string BkPageNumber { get; set; }
 

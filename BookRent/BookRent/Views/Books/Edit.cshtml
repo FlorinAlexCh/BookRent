@@ -1,0 +1,85 @@
+﻿@model BookRent.Models.Books
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Books</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="BkImage" class="control-label"></label>
+                <input asp-for="BkImage" class="form-control" />
+                <span asp-validation-for="BkImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BkName" class="control-label"></label>
+                <input asp-for="BkName" class="form-control" />
+                <span asp-validation-for="BkName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BkDescription" class="control-label"></label>
+                <input asp-for="BkDescription" class="form-control" />
+                <span asp-validation-for="BkDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BkPrice" class="control-label"></label>
+                <input asp-for="BkPrice" class="form-control" />
+                <span asp-validation-for="BkPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BkCategory" class="control-label"></label>
+                <select asp-for="BkCategory" asp-items="Html.GetEnumSelectList<BkLanguage>()" class="form-control"></select>
+                <span asp-validation-for="BkCategory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BkReleaseYear" class="control-label"></label>
+                <input asp-for="BkReleaseYear" class="form-control" />
+                <span asp-validation-for="BkReleaseYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BkPageNumber" class="control-label"></label>
+                <input asp-for="BkPageNumber" class="form-control" />
+                <span asp-validation-for="BkPageNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BkLanguage" class="control-label"></label>
+                <select asp-for="BkLanguage" asp-items="Html.GetEnumSelectList<BkLanguage>()" class="form-control"></select>
+                <span asp-validation-for="BkLanguage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BkCoverType" class="control-label"></label>
+                <input asp-for="BkCoverType" class="form-control" />
+                <span asp-validation-for="BkCoverType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PublisherID" class="control-label"></label>
+                <select asp-for="PublisherID" class="form-control" asp-items="ViewBag.PublisherID"></select>
+                <span asp-validation-for="PublisherID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuthorID" class="control-label"></label>
+                <select asp-for="AuthorID" class="form-control" asp-items="ViewBag.AuthorID"></select>
+                <span asp-validation-for="AuthorID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
