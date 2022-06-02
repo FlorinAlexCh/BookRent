@@ -20,11 +20,20 @@ namespace BookRent.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString)
         {
-            var applicationDbContext = _context.Bookss.Include(b => b.Author).Include(b => b.Publisher);
-            return View(await applicationDbContext.ToListAsync());
+            //  var applicationDbContext = _context.Bookss.Include(b => b.Author).Include(b => b.Publisher);
+            // return View(await applicationDbContext.ToListAsync());
+
+            ViewData["Filter"] = SearchString;
+            var books = from b in _context.Bookss.Include(b => b.Author).Include(b => b.Publisher) select b;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                books = books.Where(b => b.BkName.Contains(SearchString));
+            }
+            return View(await books.ToListAsync());
         }
+
 
         // GET: Books/Details/5
         public async Task<IActionResult> Details(int? id)
