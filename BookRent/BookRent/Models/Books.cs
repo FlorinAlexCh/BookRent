@@ -14,6 +14,7 @@ namespace BookRent.Models
 
         public string BkImage { get; set; }
 
+        [Display(Name ="Nume")]
         public string BkName { get; set; }
 
         public string BkDescription { get; set; }    
@@ -23,6 +24,7 @@ namespace BookRent.Models
         public BkCategory BkCategory { get; set; }
 
         public int BkReleaseYear { get; set; }
+        
         public int Quantity { get; set; }
 
         public string BkPageNumber { get; set; }
@@ -34,7 +36,7 @@ namespace BookRent.Models
         public List<Library_Books> Library_Books { get; set; }
 
         public int PublisherID { get; set; }
-        [ForeignKey("PublisherID")]
+        
         public Publisher Publisher { get; set; }
 
         public int AuthorID { get; set; }

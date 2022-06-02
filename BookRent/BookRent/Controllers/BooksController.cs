@@ -58,8 +58,11 @@ namespace BookRent.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
-            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "Id", "Id");
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "Id", "Id");
+            var authors = _context.Authors.Select(a => new SelectListItem(a.Name, a.Id.ToString())).ToList();
+            ViewData["AuthorID"] = authors;
+
+            var publishers = _context.Publishers.Select(p => new SelectListItem(p.Name, p.Id.ToString())).ToList();
+            ViewData["PublisherID"] = publishers;
             return View();
         }
 
