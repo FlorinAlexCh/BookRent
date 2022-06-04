@@ -22,7 +22,16 @@ namespace BookRent.Controllers
         // GET: BookRentals
         public async Task<IActionResult> Index()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationDbContext = _context.BookRentals.Include(b => b.Books).Include(b => b.IdentityUser).Where(b => b.IdentityUser.Id == userId);
+            
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> AllRentals()
+        {
             var applicationDbContext = _context.BookRentals.Include(b => b.Books).Include(b => b.IdentityUser);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -60,7 +69,6 @@ namespace BookRent.Controllers
             // ViewData["BookId"] = new SelectList(_context.Bookss.Where(b => b.Id == id), "BkName");
             ViewData["BookId"] = new SelectList(_context.Bookss.Where(b => b.Id == id), "Id", "Id", id);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ViewData["UserId"] = new SelectList(new[] { userId });
             ViewData["UserId"] = new SelectList(_context.Users.Where(b => b.Id == userId), "Id", "Id");
             return View();
         }
@@ -76,6 +84,11 @@ namespace BookRent.Controllers
         {
             if (ModelState.IsValid)
             {
+                var bookId = bookRentals.BookId;
+                var book = _context.Bookss.Find(bookId);
+                
+                book.Quantity--;
+                _context.Update(book);
                 _context.Add(bookRentals);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -176,6 +189,21 @@ namespace BookRent.Controllers
         private bool BookRentalsExists(int id)
         {
             return _context.BookRentals.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> Returned(int id)
+        {
+            var bookRentals = await _context.BookRentals.FindAsync(id);
+            var bookId = bookRentals.BookId;
+            var book = await _context.Bookss.FindAsync(bookId);
+
+            book.Quantity++;
+            _context.Update(book);
+
+            bookRentals.IsReturned = true;
+            _context.BookRentals.Update(bookRentals);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

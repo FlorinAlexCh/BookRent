@@ -69,8 +69,8 @@ namespace BookRent
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}").RequireAuthorization();
-                endpoints.MapRazorPages().RequireAuthorization();
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

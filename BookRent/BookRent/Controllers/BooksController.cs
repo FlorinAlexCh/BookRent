@@ -73,7 +73,7 @@ namespace BookRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BkImage,BkName,BkDescription,BkPrice,BkCategory,BkReleaseYear,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
+        public async Task<IActionResult> Create([Bind("Id,BkImage,BkName,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace BookRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BkImage,BkName,BkDescription,BkPrice,BkCategory,BkReleaseYear,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BkImage,BkName,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
         {
             if (id != books.Id)
             {

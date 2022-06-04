@@ -25,6 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.IdentityUser)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsReturned)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -32,7 +35,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RentalStart)
+                @Html.DisplayFor(modelItem => item.RentalStart) 
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RentalEnd)
@@ -44,11 +47,25 @@
                 @Html.DisplayFor(modelItem => item.IdentityUser.UserName)
             </td>
             <td>
-                @if (User.IsInRole("creator")) {
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>     
+                @if (item.RentalEnd < DateTime.Now && !item.IsReturned)
+                {
+                    <p>Expired</p>
+                }
+                else
+                {
+                    @Html.DisplayTextFor(modelItem => item.IsReturned)
+                }
+            </td>
+            <td>
+                @if (User.IsInRole("creator"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 }
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @if (!item.IsReturned) {
+                <a asp-action="Returned" asp-route-id="@item.Id">Return</a>
+                }
             </td>
         </tr>
 }
