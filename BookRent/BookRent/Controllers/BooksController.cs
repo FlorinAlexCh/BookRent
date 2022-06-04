@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookRent.Models;
 using BookRent.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookRent.Controllers
 {
@@ -55,6 +56,7 @@ namespace BookRent.Controllers
             return View(books);
         }
 
+        [Authorize(Roles = "creator")]
         // GET: Books/Create
         public IActionResult Create()
         {

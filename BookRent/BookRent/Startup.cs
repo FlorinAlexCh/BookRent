@@ -34,8 +34,8 @@ namespace BookRent
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddSession();
@@ -69,8 +69,8 @@ namespace BookRent
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                    pattern: "{controller=Home}/{action=Index}/{id?}").RequireAuthorization();
+                endpoints.MapRazorPages().RequireAuthorization();
             });
         }
     }
