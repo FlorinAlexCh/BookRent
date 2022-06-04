@@ -17,6 +17,8 @@ namespace BookRent.Models
         [Display(Name ="Nume")]
         public string BkName { get; set; }
 
+        public string BKShortDescription { get; set; }
+
         public string BkDescription { get; set; }    
 
         public string BkPrice { get; set; }

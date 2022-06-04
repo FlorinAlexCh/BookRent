@@ -98,9 +98,11 @@ namespace BookRent.Controllers
             {
                 return NotFound();
             }
-            ViewData["BookId"] = new SelectList(_context.Bookss, "Id", "Id", bookRentals.BookId);
+
+            var books = _context.Bookss.Select(a => new SelectListItem(a.BkName, a.Id.ToString())).ToList();
+            ViewData["BookId"] = books;
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", bookRentals.UserId);
-            return View(bookRentals);
+            return View();
         }
 
         // POST: BookRentals/Edit/5
