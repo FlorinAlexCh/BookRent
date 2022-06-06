@@ -72,12 +72,6 @@
     <None Include="wwwroot\vendor\lightbox2\js\lightbox.js" />
     <None Include="wwwroot\vendor\lightbox2\js\lightbox.min.js" />
     <None Include="wwwroot\vendor\lightbox2\js\lightbox.min.map" />
-    <None Include="wwwroot\vendor\MagnificPopup\jquery.magnific-popup.js" />
-    <None Include="wwwroot\vendor\MagnificPopup\jquery.magnific-popup.min.js" />
-    <None Include="wwwroot\vendor\parallax100\parallax100.js" />
-    <None Include="wwwroot\vendor\perfect-scrollbar\perfect-scrollbar.min.js" />
-    <None Include="wwwroot\vendor\select2\select2.js" />
-    <None Include="wwwroot\vendor\select2\select2.min.js" />
     <None Include="wwwroot\vendor\slick\config.rb" />
     <None Include="wwwroot\vendor\slick\fonts\slick.svg" />
     <None Include="wwwroot\vendor\slick\slick-theme.less" />
@@ -86,7 +80,6 @@
     <None Include="wwwroot\vendor\slick\slick.less" />
     <None Include="wwwroot\vendor\slick\slick.min.js" />
     <None Include="wwwroot\vendor\slick\slick.scss" />
-    <None Include="wwwroot\vendor\sweetalert\sweetalert.min.js" />
   </ItemGroup>
 
   <ItemGroup>
