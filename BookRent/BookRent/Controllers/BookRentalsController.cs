@@ -20,6 +20,7 @@ namespace BookRent.Controllers
         }
 
         // GET: BookRentals
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -56,6 +57,7 @@ namespace BookRent.Controllers
         }
 
         // GET: BookRentals/Create
+        [Authorize(Roles = "creator")]
         public IActionResult CreateAdmin()
        {
            ViewData["BookId"] = new SelectList(_context.Bookss, "Id", "Id");
@@ -164,6 +166,7 @@ namespace BookRent.Controllers
         }
 
         // GET: BookRentals/Delete/5
+        [Authorize(Roles = "creator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

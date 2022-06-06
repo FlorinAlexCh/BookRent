@@ -5,69 +5,72 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<p class="font-weight-bold text-muted">In cazul in care Cartea imprumutata nu este returnata in termenul specificat in coloana "Pana La" vei fi obligat sa achiti suma totala a cartii.</p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RentalStart)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentalEnd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Books)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsReturned)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalStart) 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalEnd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Books.BkName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityUser.UserName)
-            </td>
-            <td>
-                @if (item.RentalEnd < DateTime.Now && !item.IsReturned)
-                {
-                    <p>Expired</p>
-                }
-                else
-                {
-                    @Html.DisplayTextFor(modelItem => item.IsReturned)
-                }
-            </td>
-            <td>
-                @if (User.IsInRole("creator"))
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                }
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                @if (!item.IsReturned) {
+    <tr class="table_head">
+        <th class="column-3">Nume Carte</th>
+        <th class="column-1">Incepand Cu</th>
+        <th class="column-2">Pana La</th>
+        @if (User.IsInRole("creator")) {
+            <th class="column-4">Utilizator</th>
+        }
+        <th class="column-5">Status</th>
+    </tr>
+
+        @foreach (var item in Model)
+        {
+<tr class="table_row">
+    <td>
+        @Html.DisplayFor(modelItem => item.Books.BkName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RentalStart)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RentalEnd)
+    </td>
+    @if (User.IsInRole("creator"))
+    {
+        <td>
+            @Html.DisplayFor(modelItem => item.IdentityUser.UserName)
+        </td>
+    }
+    <td>
+        @if (item.RentalEnd < DateTime.Now && !item.IsReturned)
+        {
+            <p style="color:red">Depasire Termen</p>
+        }
+        else if (item.IsReturned)
+        {
+            <p style="color:green">Returnat</p>
+        }
+        else
+        {
+            <p>Imprumutat</p>
+        }
+    </td>
+    <td>
+
+        @if (User.IsInRole("creator"))
+        {
+            <button class="btn btn-outline-info">
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            </button>
+            <button class="btn btn-outline-info">
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </button>
+        }
+        <button class="btn btn-outline-info">
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+        </button>
+        @if (!item.IsReturned)
+        {
+            <button class="btn btn-outline-info">
                 <a asp-action="Returned" asp-route-id="@item.Id">Return</a>
-                }
-            </td>
-        </tr>
-}
-    </tbody>
+            </button>
+        }
+
+    </td>
+</tr>
+        }
 </table>

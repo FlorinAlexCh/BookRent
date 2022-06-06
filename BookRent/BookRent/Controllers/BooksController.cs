@@ -87,6 +87,7 @@ namespace BookRent.Controllers
         }
 
         // GET: Books/Edit/5
+        [Authorize(Roles = "creator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -142,6 +143,7 @@ namespace BookRent.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = "creator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

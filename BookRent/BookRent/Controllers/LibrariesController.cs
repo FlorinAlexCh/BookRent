@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using BookRent.Data;
 using BookRent.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookRent.Controllers
 {
@@ -44,6 +42,7 @@ namespace BookRent.Controllers
         }
 
         // GET: Libraries/Create
+        [Authorize(Roles = "creator")]
         public IActionResult Create()
         {
             return View();
@@ -66,6 +65,7 @@ namespace BookRent.Controllers
         }
 
         // GET: Libraries/Edit/5
+        [Authorize(Roles = "creator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,6 +117,7 @@ namespace BookRent.Controllers
         }
 
         // GET: Libraries/Delete/5
+        [Authorize(Roles = "creator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

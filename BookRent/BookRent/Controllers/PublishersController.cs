@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookRent.Data;
 using BookRent.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookRent.Controllers
 {
@@ -44,6 +45,7 @@ namespace BookRent.Controllers
         }
 
         // GET: Publishers/Create
+        [Authorize(Roles = "creator")]
         public IActionResult Create()
         {
             return View();
@@ -66,6 +68,7 @@ namespace BookRent.Controllers
         }
 
         // GET: Publishers/Edit/5
+        [Authorize(Roles = "creator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,6 +120,7 @@ namespace BookRent.Controllers
         }
 
         // GET: Publishers/Delete/5
+        [Authorize(Roles = "creator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
