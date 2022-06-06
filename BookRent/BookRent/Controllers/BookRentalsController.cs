@@ -28,7 +28,7 @@ namespace BookRent.Controllers
             
             return View(await applicationDbContext.ToListAsync());
         }
-
+        [Authorize(Roles = "creator")]
         public async Task<IActionResult> AllRentals()
         {
             var applicationDbContext = _context.BookRentals.Include(b => b.Books).Include(b => b.IdentityUser);

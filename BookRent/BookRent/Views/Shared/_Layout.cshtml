@@ -57,6 +57,12 @@
                             <li>
                                 <a href="~/BookRentals/Index">Istoric Imprumut</a>
                             </li>
+                            @if (User.IsInRole("creator"))
+                            {
+                                <li>
+                                    <a href="~/Bookrentals/allrentals">Istoric Admin</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <div class="wrap-icon-header flex-w flex-r-m">
@@ -112,6 +118,15 @@
                 <li>
                     <a href="~/Publishers/Index">Edituri</a>
                 </li>
+                <li>
+                    <a href="~/BookRentals/Index">Istoric Imprumut</a>
+                </li>
+                @if (User.IsInRole("creator"))
+                {
+                    <li>
+                        <a href="~/Bookrentals/allrentals">Istoric Admin</a>
+                    </li>
+                }
                 <li>
                     <a> <partial name="_LoginPartial" /></a>
                 </li>

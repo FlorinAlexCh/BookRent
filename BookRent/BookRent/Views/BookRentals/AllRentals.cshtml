@@ -1,43 +1,75 @@
-﻿@model BookRent.Models.BookRentals
+﻿@model IEnumerable<BookRent.Models.BookRentals>
 
 @{
     ViewData["Title"] = "AllRentals";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<table class="table">
+    <tr class="table_head">
+        <th class="column-3">Nume Carte</th>
+        <th class="column-1">Incepand Cu</th>
+        <th class="column-2">Pana La</th>
+        @if (User.IsInRole("creator"))
+        {
+            <th class="column-4">Utilizator</th>
+        }
+        <th class="column-5">Status</th>
+    </tr>
 
-<div>
-    <h4>BookRentals</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RentalStart)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RentalStart)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RentalEnd)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RentalEnd)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Books)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Books.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IdentityUser)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdentityUser.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    @foreach (var item in Model)
+    {
+        <tr class="table_row">
+            <td>
+                @Html.DisplayFor(modelItem => item.Books.BkName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalEnd)
+            </td>
+            @if (User.IsInRole("creator"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdentityUser.UserName)
+                </td>
+            }
+            <td>
+                @if (item.RentalEnd < DateTime.Now && !item.IsReturned)
+                {
+                    <p style="color:red">Depasire Termen</p>
+                }
+                else if (item.IsReturned)
+                {
+                    <p style="color:green">Returnat</p>
+                }
+                else
+                {
+                    <p>Imprumutat</p>
+                }
+            </td>
+            <td>
+
+                @if (User.IsInRole("creator"))
+                {
+                    <button class="btn btn-outline-info">
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    </button>
+                    <button class="btn btn-outline-info">
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </button>
+                }
+                <button class="btn btn-outline-info">
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </button>
+                @if (!item.IsReturned)
+                {
+                    <button class="btn btn-outline-info">
+                        <a asp-action="Returned" asp-route-id="@item.Id">Return</a>
+                    </button>
+                }
+
+            </td>
+        </tr>
+    }
+</table>
