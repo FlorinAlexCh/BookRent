@@ -73,7 +73,7 @@ namespace BookRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BkImage,BkName,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
+        public async Task<IActionResult> Create([Bind("Id,BkImage,BkName,BKShortDescription,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
         {
             if (ModelState.IsValid)
             {
@@ -100,8 +100,11 @@ namespace BookRent.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "Id", "Id", books.AuthorID);
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "Id", "Id", books.PublisherID);
+            var authors = _context.Authors.Select(a => new SelectListItem(a.Name, a.Id.ToString())).ToList();
+            ViewData["AuthorID"] = authors;
+
+            var publishers = _context.Publishers.Select(p => new SelectListItem(p.Name, p.Id.ToString())).ToList();
+            ViewData["PublisherID"] = publishers;
             return View(books);
         }
 
@@ -110,7 +113,7 @@ namespace BookRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BkImage,BkName,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BkImage,BkName,BKShortDescription,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
         {
             if (id != books.Id)
             {

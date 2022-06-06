@@ -6,46 +6,47 @@
 
 
 <form asp-action="Index" method="get">
-    <div class="form-group">
-        <label for="SearchString">Search for the book:</label>
-        <input type="text" name="SearchString"
-               value="@ViewData["CurrentFilter"]" />
+    <div class="input-group">
+        <input type="search" name="SearchString" value="@ViewData["CurrentFilter"]" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
         <input type="submit" value="Search" class="btn btn-primary" />
+        <button type="button" class="btn btn-outline-primary">
+            <a asp-controller="Books" asp-action="Index">Reset</a>
+        </button>
     </div>
-</form>
+    </form>
 
-<div class="bg0 m-t-23 p-b-140">
-    <div class="container">
-        <div class="row isotope-grid">
-            @foreach (var item in Model)
-            {
-                <div class="block2">
-                    <div class="block2-pic hov-img0">
-                        <img src=@item.BkImage alt="IMG-PRODUCT" width="270" height="334">
+    <div class="bg0 m-t-23 p-b-140">
+        <div class="container">
+            <div class="row isotope-grid">
+                @foreach (var item in Model)
+                {
+                    <div class="block2">
+                        <div class="block2-pic hov-img0">
+                            <img src=@item.BkImage alt="IMG-PRODUCT" width="270" height="334">
 
-                        <a class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04" asp-action="Details" asp-route-id=@item.Id>
-                             Vezi Detalii
-                        </a>
-                    </div>
-
-                    <div class="block2-txt flex-w flex-t p-t-14">
-                        <div class="block2-txt-child1 flex-col-l ">
-                            <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                @item.BkName
+                            <a class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04" asp-action="Details" asp-route-id=@item.Id>
+                                Vezi Detalii
                             </a>
+                        </div>
 
-                            <span class="stext-105 cl3">
-                                @item.BkPrice Lei
-                            </span>
+                        <div class="block2-txt flex-w flex-t p-t-14">
+                            <div class="block2-txt-child1 flex-col-l ">
+                                <a href="" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                    @item.BkName
+                                </a>
+
+                                <span class="stext-105 cl3">
+                                    @item.BkPrice Lei
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
-</div>
 
-@if (User.IsInRole("creator"))
-{
-    @await Html.PartialAsync("_AddItem", "Books")
-}
+    @if (User.IsInRole("creator"))
+    {
+        @await Html.PartialAsync("_AddItem", "Books")
+    }

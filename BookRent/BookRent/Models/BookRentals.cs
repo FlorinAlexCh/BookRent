@@ -38,18 +38,18 @@ namespace BookRent.Models
             if (rentalEnd < rentalStart)
             {
                 yield return new ValidationResult
-                    ("RentalEnd cannot be less than RentalStart");
+                    ("Data de returnare trebuie sa fie mai recenta decat cea de imprumut, schimba data si incearca din nou");
             }
             else if (rentalEnd > rentalStart.AddDays(7))
             {
                 yield return new ValidationResult
-                    ("Rental Duration cannot exceed a week");
+                    ("Durata de imprumut nu poate fi mai mare de 7 zile, asigura-te ca durata e mai mica de 7 zile si incearca din nou");
             }
 
             if(rentalStart < DateTime.Today)
             {
                 yield return new ValidationResult
-                 ("RentalStart cannot be less than CurrentTime");
+                 ("Data de imprumut nu poate fi in trecut, schimba data si incearca din nou");
             }
         }
     }
