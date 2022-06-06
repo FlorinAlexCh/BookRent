@@ -70,7 +70,12 @@ namespace BookRent.Controllers
             ViewData["BookId"] = new SelectList(_context.Bookss.Where(b => b.Id == id), "Id", "Id", id);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["UserId"] = new SelectList(_context.Users.Where(b => b.Id == userId), "Id", "Id");
-            return View();
+            var book = _context.Bookss.Where(b => b.Id == id).First();
+            var bookRentals = new BookRentals()
+            {
+                Books = book
+            };
+            return View(bookRentals);
         }
 
 
@@ -82,11 +87,12 @@ namespace BookRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RentalStart,RentalEnd,BookId,UserId")] BookRentals bookRentals)
         {
+            var bookId = bookRentals.BookId;
+            var book = _context.Bookss.Find(bookId);
+            bookRentals.Books = book;
+
             if (ModelState.IsValid)
             {
-                var bookId = bookRentals.BookId;
-                var book = _context.Bookss.Find(bookId);
-                
                 book.Quantity--;
                 _context.Update(book);
                 _context.Add(bookRentals);
@@ -95,6 +101,8 @@ namespace BookRent.Controllers
             }
             ViewData["BookId"] = new SelectList(_context.Bookss, "Id", "Id", bookRentals.BookId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", bookRentals.UserId);
+            
+            
             return View(bookRentals);
         }
 
