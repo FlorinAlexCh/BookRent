@@ -16,17 +16,12 @@ namespace BookRent.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Library_Books>().HasKey(lb => new { lb.LibraryId, lb.BooksId });
-            builder.Entity<Library_Books>().HasOne(b => b.Books).WithMany(lb => lb.Library_Books).HasForeignKey(b => b.BooksId);
-            builder.Entity<Library_Books>().HasOne(b => b.Library).WithMany(lb => lb.Library_Books).HasForeignKey(b => b.LibraryId);
-
-
             builder.Entity<Books>().HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherID).HasConstraintName("FK_Bookss_Publishers_PublisherID");
+            builder.Entity<Books>().HasOne(b => b.Library).WithMany(l => l.Books).HasForeignKey(l => l.LibraryID).HasConstraintName("FK_Bookss_Libraries_LibraryID");
 
 
             base.OnModelCreating(builder);
         }
-        public DbSet<Library_Books> Library_Bookss { get; set; }
         public DbSet<Books> Bookss { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Publisher> Publishers { get; set; }

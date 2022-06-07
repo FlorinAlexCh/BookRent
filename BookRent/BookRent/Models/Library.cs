@@ -21,7 +21,7 @@ namespace BookRent.Models
 
         public string OpenHours { get; set; }
 
-        public List<Library_Books> Library_Books { get; set; }
+        public List<Books> Books { get; set; }
 
     }
 }

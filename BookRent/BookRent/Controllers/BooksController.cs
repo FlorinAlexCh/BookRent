@@ -47,6 +47,7 @@ namespace BookRent.Controllers
             var books = await _context.Bookss
                 .Include(b => b.Author)
                 .Include(b => b.Publisher)
+                .Include(b => b.Library)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (books == null)
             {
@@ -65,6 +66,9 @@ namespace BookRent.Controllers
 
             var publishers = _context.Publishers.Select(p => new SelectListItem(p.Name, p.Id.ToString())).ToList();
             ViewData["PublisherID"] = publishers;
+
+            var libraries = _context.Libraries.Select(l => new SelectListItem(l.Title, l.Id.ToString())).ToList();
+            ViewData["LibraryID"] = libraries;
             return View();
         }
 
@@ -73,7 +77,7 @@ namespace BookRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BkImage,BkName,BKShortDescription,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
+        public async Task<IActionResult> Create([Bind("Id,BkImage,BkName,BKShortDescription,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,LibraryID,PublisherID,AuthorID")] Books books)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +87,7 @@ namespace BookRent.Controllers
             }
             ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "Id", "Id", books.AuthorID);
             ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "Id", "Id", books.PublisherID);
+            ViewData["LibraryID"] = new SelectList(_context.Set<Library>(), "Id", "Id", books.LibraryID);
             return View(books);
         }
 
@@ -105,6 +110,10 @@ namespace BookRent.Controllers
 
             var publishers = _context.Publishers.Select(p => new SelectListItem(p.Name, p.Id.ToString())).ToList();
             ViewData["PublisherID"] = publishers;
+
+
+            var libraries = _context.Libraries.Select(l => new SelectListItem(l.Title, l.Id.ToString())).ToList();
+            ViewData["LibraryID"] = libraries;
             return View(books);
         }
 
@@ -113,7 +122,7 @@ namespace BookRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BkImage,BkName,BKShortDescription,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,PublisherID,AuthorID")] Books books)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BkImage,BkName,BKShortDescription,BkDescription,BkPrice,BkCategory,BkReleaseYear,Quantity,BkPageNumber,BkLanguage,BkCoverType,LibraryID,PublisherID,AuthorID")] Books books)
         {
             if (id != books.Id)
             {
@@ -141,6 +150,7 @@ namespace BookRent.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "Id", "Id", books.AuthorID);
+            ViewData["LibraryID"] = new SelectList(_context.Set<Library>(), "Id", "Id", books.LibraryID);
             ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "Id", "Id", books.PublisherID);
             return View(books);
         }

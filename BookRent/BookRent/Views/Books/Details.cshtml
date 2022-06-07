@@ -68,6 +68,17 @@
                     <span class="mtext-106 cl2">
                         Cantitate Disponibila: @Model.Quantity
                     </span>
+                    <br />
+                    <br />
+                    <span class="mtext-106 cl2">
+                        <b>Disponibil La: </b>
+                        <a asp-controller="Libraries" asp-action="Details" asp-route-id="@Model.LibraryID">
+                            @Model.Library.Title
+                        </a>
+                    </span>
+                    <br />
+                    <br />
+
                     <!--  -->
 
                     <br />
@@ -155,7 +166,9 @@
                                     </span>
 
                                     <span class="stext-102 cl6 size-206">
-                                        @Model.Author.Name
+                                        <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.AuthorID">
+                                            @Model.Author.Name
+                                            </a>
                                     </span>
                                 </li>
 
@@ -184,7 +197,9 @@
                                     </span>
 
                                     <span class="stext-102 cl6 size-206">
-                                        @Model.Publisher.Name
+                                        <a asp-controller="Publishers" asp-action="Details" asp-route-id="@Model.PublisherID">
+                                            @Model.Publisher.Name
+                                            </a>
                                     </span>
                                 </li>
                             </ul>

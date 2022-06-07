@@ -4,14 +4,16 @@ using BookRent.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookRent.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220607073147_library_books")]
+    partial class library_books
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +116,7 @@ namespace BookRent.Data.Migrations
                     b.Property<int>("BkReleaseYear")
                         .HasColumnType("int");
 
-                    b.Property<int>("LibraryID")
+                    b.Property<int?>("LibraryId")
                         .HasColumnType("int");
 
                     b.Property<int>("PublisherID")
@@ -127,7 +129,7 @@ namespace BookRent.Data.Migrations
 
                     b.HasIndex("AuthorID");
 
-                    b.HasIndex("LibraryID");
+                    b.HasIndex("LibraryId");
 
                     b.HasIndex("PublisherID");
 
@@ -159,6 +161,21 @@ namespace BookRent.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Libraries");
+                });
+
+            modelBuilder.Entity("BookRent.Models.Library_Books", b =>
+                {
+                    b.Property<int>("LibraryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BooksId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LibraryId", "BooksId");
+
+                    b.HasIndex("BooksId");
+
+                    b.ToTable("Library_Bookss");
                 });
 
             modelBuilder.Entity("BookRent.Models.Publisher", b =>
@@ -408,11 +425,8 @@ namespace BookRent.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("BookRent.Models.Library", "Library")
-                        .WithMany("Books")
-                        .HasForeignKey("LibraryID")
-                        .HasConstraintName("FK_Bookss_Libraries_LibraryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("LibraryId");
 
                     b.HasOne("BookRent.Models.Publisher", "Publisher")
                         .WithMany("Books")
@@ -426,6 +440,25 @@ namespace BookRent.Data.Migrations
                     b.Navigation("Library");
 
                     b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("BookRent.Models.Library_Books", b =>
+                {
+                    b.HasOne("BookRent.Models.Books", "Books")
+                        .WithMany("Library_Books")
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookRent.Models.Library", "Library")
+                        .WithMany("Library_Books")
+                        .HasForeignKey("LibraryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Books");
+
+                    b.Navigation("Library");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -484,9 +517,14 @@ namespace BookRent.Data.Migrations
                     b.Navigation("Books");
                 });
 
+            modelBuilder.Entity("BookRent.Models.Books", b =>
+                {
+                    b.Navigation("Library_Books");
+                });
+
             modelBuilder.Entity("BookRent.Models.Library", b =>
                 {
-                    b.Navigation("Books");
+                    b.Navigation("Library_Books");
                 });
 
             modelBuilder.Entity("BookRent.Models.Publisher", b =>

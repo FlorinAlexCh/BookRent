@@ -35,10 +35,14 @@ namespace BookRent.Models
 
         public string BkCoverType { get; set; }
 
-        public List<Library_Books> Library_Books { get; set; }
+        public int LibraryID { get; set; }
+        [ForeignKey("LibraryID")]
+
+        public Library Library { get; set; }
 
         public int PublisherID { get; set; }
-        
+        [ForeignKey("PublisherID")]
+
         public Publisher Publisher { get; set; }
 
         public int AuthorID { get; set; }

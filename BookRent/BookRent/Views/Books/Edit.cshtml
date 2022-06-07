@@ -75,6 +75,11 @@
                 <span asp-validation-for="PublisherID" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="LibraryID" class="control-label"></label>
+                <select asp-for="LibraryID" class="form-control" asp-items="ViewBag.LibraryID"></select>
+                <span asp-validation-for="LibraryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="AuthorID" class="control-label"></label>
                 <select asp-for="AuthorID" class="form-control" asp-items="ViewBag.AuthorID"></select>
                 <span asp-validation-for="AuthorID" class="text-danger"></span>
